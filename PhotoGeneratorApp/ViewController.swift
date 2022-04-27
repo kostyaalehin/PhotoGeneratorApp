@@ -32,9 +32,29 @@ class ViewController: UIViewController {
         .systemPurple,
         .systemOrange
     ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemPink
+        view.addSubview(imageView)
+        imageView.frame = CGRect (x: 0, y: 0, width: 300, height: 300)
+        imageView.center = view.center
+        
+        view.addSubview(button)
+        getRandomPhoto()
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        button.frame = CGRect(
+            x: 30,
+            y: view.frame.size.height-150-view.safeAreaInsets.bottom,
+            width: view.frame.size.width-60,
+            height: 55
+        )
+    }
     }
 
 
