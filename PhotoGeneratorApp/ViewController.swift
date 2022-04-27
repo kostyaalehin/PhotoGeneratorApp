@@ -24,6 +24,14 @@ class ViewController: UIViewController {
         return button
     }()
     
+    let colors: [UIColor] = [
+        .systemPink,
+        .systemBlue,
+        .systemGreen,
+        .systemYellow,
+        .systemPurple,
+        .systemOrange
+    ]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
