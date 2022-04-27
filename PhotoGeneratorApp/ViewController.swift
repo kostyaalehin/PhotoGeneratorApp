@@ -55,6 +55,19 @@ class ViewController: UIViewController {
             height: 55
         )
     }
+    
+    @objc func didTapButton() {
+        getRandomPhoto()
+        view.backgroundColor = colors.randomElement()
+    }
+    
+    func getRandomPhoto() {
+        let urlString = "https://source.unsplash.com/random/600x600"
+        let url = URL(string: urlString)!
+        guard let data = try? Data(contentsOf: url) else {
+            return
+        }
+        imageView.image = UIImage(data: data)
     }
 
 
