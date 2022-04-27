@@ -19,9 +19,15 @@ class ViewController: UIViewController {
     private let button: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.setTitle("Random Photo", for: .normal)
+        button.setTitle("Random", for: .normal)
         button.setTitleColor(.black, for: .normal)
         return button
+    }()
+    
+    private let label: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
     }()
     
     let colors: [UIColor] = [
@@ -35,6 +41,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "Random"
         view.backgroundColor = .systemPink
         view.addSubview(imageView)
         imageView.frame = CGRect (x: 0, y: 0, width: 300, height: 300)
@@ -43,6 +50,9 @@ class ViewController: UIViewController {
         view.addSubview(button)
         getRandomPhoto()
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
+        view.addSubview(label)
+        getRandomJoke()
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,14 +60,23 @@ class ViewController: UIViewController {
         
         button.frame = CGRect(
             x: 30,
-            y: view.frame.size.height-150-view.safeAreaInsets.bottom,
-            width: view.frame.size.width-60,
+            y: view.frame.size.height - 150 - view.safeAreaInsets.bottom,
+            width: view.frame.size.width - 60,
             height: 55
+        )
+        
+        label.frame = CGRect(
+            x: 30,
+            y: view.frame.size.height-(view.frame.size.height / 4) * 3 - view.safeAreaInsets.bottom,
+            width: view.frame.size.width - 60,
+            height: 90
         )
     }
     
-    @objc func didTapButton() {
+    @objc
+    func didTapButton() {
         getRandomPhoto()
+        getRandomJoke()
         view.backgroundColor = colors.randomElement()
     }
     
@@ -78,11 +97,17 @@ class ViewController: UIViewController {
 //        }
 //        imageView.image = UIImage(data: data)
     }
+    func getRandomJoke() {
+        let string = "https://geek-jokes.sameerkumar.website/api"
+        guard let url = URL(string: string) else {
             return
         }
-        imageView.image = UIImage(data: data)
+        do {
+            let jokeString = try String(contentsOf: url)
+            label.text = jokeString
+        } catch {
+            print(error)
+        }
     }
-
-
+    
 }
-
